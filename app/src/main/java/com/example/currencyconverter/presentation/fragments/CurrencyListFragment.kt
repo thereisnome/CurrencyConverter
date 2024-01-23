@@ -1,6 +1,5 @@
 package com.example.currencyconverter.presentation.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,14 +15,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.currencyconverter.databinding.FragmentCurrencyListBinding
 import com.example.currencyconverter.domain.CurrencyEntity
-import com.example.currencyconverter.presentation.CurrencyApp
 import com.example.currencyconverter.presentation.Error
 import com.example.currencyconverter.presentation.Loading
 import com.example.currencyconverter.presentation.Success
 import com.example.currencyconverter.presentation.adapter.CurrencyListAdapter
 import com.example.currencyconverter.presentation.viewModels.CurrencyListViewModel
-import com.example.currencyconverter.presentation.viewModels.ViewModelFactory
 import com.google.android.material.datepicker.MaterialDatePicker
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.LocalDate
@@ -31,8 +29,8 @@ import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.util.Locale
-import javax.inject.Inject
 
+@AndroidEntryPoint
 class CurrencyListFragment : Fragment() {
 
     private var _binding: FragmentCurrencyListBinding? = null
@@ -40,21 +38,12 @@ class CurrencyListFragment : Fragment() {
     private val binding: FragmentCurrencyListBinding
         get() = _binding ?: throw RuntimeException("FragmentCurrencyListBinding is null")
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
 
-    private val viewModel by viewModels<CurrencyListViewModel> { viewModelFactory }
-
-    private val component by lazy { (requireActivity().application as CurrencyApp).component }
+    val viewModel: CurrencyListViewModel by viewModels()
 
     private val adapter = CurrencyListAdapter()
 
     private var date = LocalDate.now()
-
-    override fun onAttach(context: Context) {
-        component.inject(this)
-        super.onAttach(context)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
