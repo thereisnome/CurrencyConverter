@@ -1,6 +1,5 @@
 package com.example.currencyconverter.presentation.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,14 +15,13 @@ import androidx.navigation.fragment.navArgs
 import com.example.currencyconverter.R
 import com.example.currencyconverter.databinding.FragmentCurrencyDetailsBinding
 import com.example.currencyconverter.domain.CurrencyEntity
-import com.example.currencyconverter.presentation.CurrencyApp
 import com.example.currencyconverter.presentation.viewModels.CurrencyDetailsViewModel
-import com.example.currencyconverter.presentation.viewModels.ViewModelFactory
 import com.example.currencyconverter.utils.formatCurrency
 import com.example.currencyconverter.utils.formatCurrencyWithoutSign
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
+@AndroidEntryPoint
 class CurrencyDetailsFragment : Fragment() {
 
     private var _binding: FragmentCurrencyDetailsBinding? = null
@@ -31,21 +29,11 @@ class CurrencyDetailsFragment : Fragment() {
     private val binding: FragmentCurrencyDetailsBinding
         get() = _binding ?: throw RuntimeException("FragmentCurrencyDetailsBinding is null")
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-
-    private val viewModel by viewModels<CurrencyDetailsViewModel> { viewModelFactory }
-
-    private val component by lazy { (requireActivity().application as CurrencyApp).component }
+    val viewModel: CurrencyDetailsViewModel by viewModels()
 
     private val args by navArgs<CurrencyDetailsFragmentArgs>()
 
     private lateinit var currency: CurrencyEntity
-
-    override fun onAttach(context: Context) {
-        component.inject(this)
-        super.onAttach(context)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
