@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.CurrencyConverter.Launch" parent="Theme.SplashScreen">
+        <item name="android:windowSplashScreenBackground">@color/md_theme_light_primary</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/splash_screen</item>
+        <item name="android:windowSplashScreenBrandingImage">@drawable/splash_screen_branding</item>
+        <item name="postSplashScreenTheme">@style/Theme.CurrencyConverter</item>
+    </style>
+</resources>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/currencyListFragment">
+
+    <fragment
+        android:id="@+id/currencyListFragment"
+        android:name="com.example.currencyconverter.presentation.fragments.CurrencyListFragment"
+        android:label="fragment_currency_list"
+        tools:layout="@layout/fragment_currency_list" >
+        <action
+            android:id="@+id/action_currencyListFragment_to_currencyDetailsFragment"
+            app:destination="@id/currencyDetailsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+    <fragment
+        android:id="@+id/currencyDetailsFragment"
+        android:name="com.example.currencyconverter.presentation.fragments.CurrencyDetailsFragment"
+        android:label="fragment_currency_details"
+        tools:layout="@layout/fragment_currency_details" >
+        <argument
+            android:name="currencyId"
+            app:argType="string" />
+    </fragment>
+</navigation>
