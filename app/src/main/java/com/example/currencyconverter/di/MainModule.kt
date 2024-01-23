@@ -10,28 +10,28 @@ import com.example.currencyconverter.domain.CurrencyRepo
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 @Module
-interface DataModule {
+@InstallIn(SingletonComponent::class)
+interface MainModule {
 
     @Binds
-    @AppScope
-    fun bindCurrencyDao(impl: CurrencyRepoImpl): CurrencyRepo
+    fun bindCurrencyRepo(impl: CurrencyRepoImpl): CurrencyRepo
 
     companion object{
-
+        @Singleton
         @Provides
-        @AppScope
-        fun provideCurrencyDao(
-            application: Application
-        ): CurrencyDao{
-            return CurrencyDatabase.getInstance(application).currencyDao()
+        fun provideApiService():ApiService{
+            return ApiFactory.apiService
         }
 
+        @Singleton
         @Provides
-        @AppScope
-        fun provideApiService(): ApiService {
-            return ApiFactory.apiService
+        fun provideCurrencyDao(application: Application): CurrencyDao{
+            return CurrencyDatabase.getInstance(application).currencyDao()
         }
     }
 }
