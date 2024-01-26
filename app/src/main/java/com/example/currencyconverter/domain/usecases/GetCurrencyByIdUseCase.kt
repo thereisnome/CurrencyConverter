@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class GetCurrencyByIdUseCase @Inject constructor(private val currencyRepo: CurrencyRepo) {
 
-    suspend operator fun invoke(id: String): CurrencyEntity{
-        return currencyRepo.getCurrencyById(id)
+    suspend operator fun invoke(id: String, date: String): CurrencyEntity{
+        return currencyRepo.getCurrencyById(id, date)
     }
 }

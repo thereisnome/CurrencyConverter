@@ -45,7 +45,7 @@ class CurrencyDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getCurrencyById(args.currencyId)
+        viewModel.getCurrencyById(args.currencyId, args.date)
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED){

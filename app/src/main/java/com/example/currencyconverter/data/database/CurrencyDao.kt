@@ -16,6 +16,6 @@ interface CurrencyDao {
     @Query("SELECT * FROM currency_list WHERE substr(date, 1, 10) = :date")
     fun getCurrencyList(date: String): Flow<List<CurrencyDBModel>>
 
-    @Query("SELECT * FROM currency_list WHERE id = :id")
-    suspend fun getCurrencyById(id: String): CurrencyDBModel
+    @Query("SELECT * FROM currency_list WHERE id = :id AND substr(date, 1, 10) = :date")
+    suspend fun getCurrencyById(id: String, date: String): CurrencyDBModel
 }

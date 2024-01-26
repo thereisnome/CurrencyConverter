@@ -24,12 +24,13 @@ class CurrencyListViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     fun getCurrencyList(date: String) {
+        _state.value = Loading
         viewModelScope.launch {
             getCurrencyListUseCase(date).flowOn(Dispatchers.IO).collect { currencyList ->
-                if (currencyList.isNotEmpty()) {
-                    _state.emit(Success(currencyList))
-                } else {
+                if (currencyList.isEmpty()) {
                     _state.emit(Error)
+                } else {
+                    _state.emit(Success(currencyList))
                 }
             }
         }
