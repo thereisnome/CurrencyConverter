@@ -8,5 +8,5 @@ interface CurrencyRepo {
 
     fun getCurrencyList(date: String): Flow<List<CurrencyEntity>>
 
-    suspend fun getCurrencyById(id: String): CurrencyEntity
+    suspend fun getCurrencyById(id: String, date: String): CurrencyEntity
 }

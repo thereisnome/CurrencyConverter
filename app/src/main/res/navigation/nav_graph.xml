@@ -26,5 +26,8 @@
         <argument
             android:name="currencyId"
             app:argType="string" />
+        <argument
+            android:name="date"
+            app:argType="string" />
     </fragment>
 </navigation>

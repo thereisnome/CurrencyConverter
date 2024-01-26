@@ -20,9 +20,9 @@ class CurrencyDetailsViewModel @Inject constructor(
     private val _resultStateFlow = MutableStateFlow<CurrencyEntity?>(null)
     val resultStateFlow = _resultStateFlow.asStateFlow()
 
-    fun getCurrencyById(id: String) {
+    fun getCurrencyById(id: String, date: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = getCurrencyByIdUseCase(id)
+            val result = getCurrencyByIdUseCase(id, date)
             withContext(Dispatchers.Main){
                 _resultStateFlow.value = result
             }

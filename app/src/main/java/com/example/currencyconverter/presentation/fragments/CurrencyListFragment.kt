@@ -81,7 +81,7 @@ class CurrencyListFragment : Fragment() {
                         }
 
                         is Loading -> {
-                            showProgressLayout(fadeIn, fadeOut)
+                            showLoadingLayout(fadeIn, fadeOut)
                         }
 
                         is Success -> {
@@ -90,7 +90,8 @@ class CurrencyListFragment : Fragment() {
                             adapter.onCurrencyClickListener = { currencyId ->
                                 findNavController().navigate(
                                     CurrencyListFragmentDirections.actionCurrencyListFragmentToCurrencyDetailsFragment(
-                                        currencyId
+                                        currencyId,
+                                        date.toString()
                                     )
                                 )
                             }
@@ -110,7 +111,7 @@ class CurrencyListFragment : Fragment() {
         binding.rvCurrencyList.visibility = View.VISIBLE
     }
 
-    private fun showProgressLayout(fadeIn: AlphaAnimation, fadeOut: AlphaAnimation) {
+    private fun showLoadingLayout(fadeIn: AlphaAnimation, fadeOut: AlphaAnimation) {
         binding.tvError.startAnimation(fadeOut)
         binding.tvError.visibility = View.GONE
         binding.progressBar.startAnimation(fadeIn)
