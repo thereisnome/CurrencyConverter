@@ -11,5 +11,7 @@ data class CurrencyDBModel(
     val compositeKey: CompositePrimaryKey,
     val charCode: String,
     val name: String,
-    val value: Double
+    val value: Double,
+    val previous: Double,
+    val nominal: Int
 )

@@ -8,5 +8,12 @@ fun formatCurrency(value: Double): String {
 }
 
 fun formatCurrencyWithoutSign(value: Double): String {
-    return NumberFormat.getCurrencyInstance(Locale("ru", "RU")).format(value).replace( "₽", "")
+    return NumberFormat.getCurrencyInstance(Locale("ru", "RU")).format(value).replace("₽", "")
+}
+
+fun formatDiff(value: Double): String {
+    val formattedAmount = NumberFormat.getCurrencyInstance(Locale("ru", "RU")).format(value)
+    return if (value>=0){
+        "+$formattedAmount".replace(" руб.", "₽")
+    } else formattedAmount.replace(" руб.", "₽")
 }

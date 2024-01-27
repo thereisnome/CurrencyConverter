@@ -24,10 +24,19 @@
         android:id="@+id/currency_value"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="4dp"
         android:textAlignment="center"
         android:textColor="?attr/colorOutline"
         android:textSize="20sp"
         tools:text="52.00 Р" />
+
+    <TextView
+        android:id="@+id/currency_diff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        tools:text="+2.00 Р" />
 
 </LinearLayout>

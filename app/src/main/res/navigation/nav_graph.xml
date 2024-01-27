@@ -23,9 +23,11 @@
         android:name="com.example.currencyconverter.presentation.fragments.CurrencyDetailsFragment"
         android:label="fragment_currency_details"
         tools:layout="@layout/fragment_currency_details" >
+        <!--suppress NavigationFile -->
         <argument
             android:name="currencyId"
             app:argType="string" />
+        <!--suppress NavigationFile -->
         <argument
             android:name="date"
             app:argType="string" />

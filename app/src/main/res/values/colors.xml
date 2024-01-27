@@ -34,6 +34,8 @@
     <color name="md_theme_light_surfaceTint">#006399</color>
     <color name="md_theme_light_outlineVariant">#C2C7CF</color>
     <color name="md_theme_light_scrim">#000000</color>
+    <color name="md_theme_light_currency_diff_pos">#21a359</color>
+    <color name="md_theme_light_currency_diff_neg">#a32130</color>
 
     <color name="md_theme_dark_primary">#95CCFF</color>
     <color name="md_theme_dark_onPrimary">#003352</color>
@@ -65,4 +67,7 @@
     <color name="md_theme_dark_surfaceTint">#95CCFF</color>
     <color name="md_theme_dark_outlineVariant">#42474E</color>
     <color name="md_theme_dark_scrim">#000000</color>
+    <color name="md_theme_dark_currency_diff_pos">#1be070</color>
+    <color name="md_theme_dark_currency_diff_neg">#db2136</color>
+
 </resources>

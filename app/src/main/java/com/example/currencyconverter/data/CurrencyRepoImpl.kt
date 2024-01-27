@@ -26,6 +26,10 @@ class CurrencyRepoImpl @Inject constructor(
         return currencyDao.getCurrencyList(date).map { list -> list.map { mapper.mapCurrencyDBtoEntity(it) } }
     }
 
+    override fun getCurrencyListByCharCode(charCode: String, date: String): Flow<List<CurrencyEntity>> {
+        return currencyDao.getCurrencyListByCharCode(charCode, date).map { list -> list.map { mapper.mapCurrencyDBtoEntity(it) } }
+    }
+
     override suspend fun getCurrencyById(id: String, date: String): CurrencyEntity {
         return mapper.mapCurrencyDBtoEntity(currencyDao.getCurrencyById(id, date))
     }

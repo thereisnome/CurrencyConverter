@@ -13,13 +13,17 @@ class Mapper @Inject constructor() {
         compositeKey = CompositePrimaryKey(currencyDto.id, currencyListDTO.date),
         charCode = currencyDto.charCode,
         name = currencyDto.name,
-        value = currencyDto.value
+        value = currencyDto.value,
+        previous = currencyDto.previous,
+        nominal = currencyDto.nominal
     )
 
     fun mapCurrencyDBtoEntity(db: CurrencyDBModel) = CurrencyEntity(
         id = db.compositeKey.id,
         charCode = db.charCode,
         name = db.name,
-        value = db.value
+        value = db.value,
+        previous = db.previous,
+        nominal = db.nominal
     )
 }
