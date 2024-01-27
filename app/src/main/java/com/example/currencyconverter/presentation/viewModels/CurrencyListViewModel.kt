@@ -2,6 +2,7 @@ package com.example.currencyconverter.presentation.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.currencyconverter.domain.usecases.GetCurrencyListByCharCodeUseCase
 import com.example.currencyconverter.domain.usecases.GetCurrencyListUseCase
 import com.example.currencyconverter.presentation.Error
 import com.example.currencyconverter.presentation.Loading
@@ -17,7 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CurrencyListViewModel @Inject constructor(
-    private val getCurrencyListUseCase: GetCurrencyListUseCase
+    private val getCurrencyListUseCase: GetCurrencyListUseCase,
+    private val getCurrencyListByCharCodeUseCase: GetCurrencyListByCharCodeUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<State>(Loading)
@@ -27,6 +29,19 @@ class CurrencyListViewModel @Inject constructor(
         _state.value = Loading
         viewModelScope.launch {
             getCurrencyListUseCase(date).flowOn(Dispatchers.IO).collect { currencyList ->
+                if (currencyList.isEmpty()) {
+                    _state.emit(Error)
+                } else {
+                    _state.emit(Success(currencyList))
+                }
+            }
+        }
+    }
+
+    fun getCurrencyListByCharCode(charCode: String, date: String){
+        _state.value = Loading
+        viewModelScope.launch {
+            getCurrencyListByCharCodeUseCase(charCode, date).flowOn(Dispatchers.IO).collect { currencyList ->
                 if (currencyList.isEmpty()) {
                     _state.emit(Error)
                 } else {

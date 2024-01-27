@@ -8,5 +8,7 @@ interface CurrencyRepo {
 
     fun getCurrencyList(date: String): Flow<List<CurrencyEntity>>
 
+    fun getCurrencyListByCharCode(charCode: String, date: String): Flow<List<CurrencyEntity>>
+
     suspend fun getCurrencyById(id: String, date: String): CurrencyEntity
 }

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -39,11 +40,13 @@ class CurrencyListFragment : Fragment() {
         get() = _binding ?: throw RuntimeException("FragmentCurrencyListBinding is null")
 
 
-    val viewModel: CurrencyListViewModel by viewModels()
+    private val viewModel: CurrencyListViewModel by viewModels()
 
     private val adapter = CurrencyListAdapter()
 
     private var date = LocalDate.now()
+
+    private var searchCharCode = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -63,39 +66,58 @@ class CurrencyListFragment : Fragment() {
             duration = 300
         }
 
+        setupRecyclerView()
+
         binding.etDate.setText(formatLocalDate(date))
 
         binding.etDate.setOnClickListener {
             showStartDatePicker()
         }
 
-        setupRecyclerView()
-        updateData()
+        getAllCurrencies()
+
+        binding.etSearch.doOnTextChanged { text, _, _, _ ->
+            if (text?.isBlank() == true){
+                getAllCurrencies()
+            } else {
+                searchCharCode = text.toString()
+                getCurrencyByCharCode()
+            }
+        }
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED){
-                viewModel.state.collect {
-                    when (it) {
-                        is Error -> {
-                            showErrorLayout(fadeIn, fadeOut)
-                        }
+                collectFlow(fadeIn, fadeOut)
+            }
+        }
+    }
 
-                        is Loading -> {
-                            showLoadingLayout(fadeIn, fadeOut)
-                        }
+    private fun getCurrencyByCharCode() {
+        viewModel.getCurrencyListByCharCode(searchCharCode, date.toString())
+    }
 
-                        is Success -> {
-                            showSuccessLayout(fadeIn, fadeOut)
-                            updateRecyclerView(it.result)
-                            adapter.onCurrencyClickListener = { currencyId ->
-                                findNavController().navigate(
-                                    CurrencyListFragmentDirections.actionCurrencyListFragmentToCurrencyDetailsFragment(
-                                        currencyId,
-                                        date.toString()
-                                    )
-                                )
-                            }
-                        }
+    private suspend fun collectFlow(
+        fadeIn: AlphaAnimation, fadeOut: AlphaAnimation
+    ) {
+        viewModel.state.collect {
+            when (it) {
+                is Error -> {
+                    showErrorLayout(fadeIn, fadeOut)
+                }
+
+                is Loading -> {
+                    showLoadingLayout(fadeIn, fadeOut)
+                }
+
+                is Success -> {
+                    showSuccessLayout(fadeIn, fadeOut)
+                    updateRecyclerView(it.result)
+                    adapter.onCurrencyClickListener = { currencyId ->
+                        findNavController().navigate(
+                            CurrencyListFragmentDirections.actionCurrencyListFragmentToCurrencyDetailsFragment(
+                                currencyId, date.toString()
+                            )
+                        )
                     }
                 }
             }
@@ -139,7 +161,7 @@ class CurrencyListFragment : Fragment() {
         adapter.submitList(list)
     }
 
-    private fun updateData() {
+    private fun getAllCurrencies() {
         viewModel.getCurrencyList(date.toString())
     }
 
@@ -149,7 +171,11 @@ class CurrencyListFragment : Fragment() {
         datePicker.addOnPositiveButtonClickListener { dateInMillis ->
             date = millisToLocalDate(dateInMillis)
             binding.etDate.setText(formatLocalDate(date))
-            updateData()
+            if (searchCharCode.isBlank()){
+                getAllCurrencies()
+            } else {
+                getCurrencyByCharCode()
+            }
         }
         datePicker.show(childFragmentManager, "datePicker")
     }

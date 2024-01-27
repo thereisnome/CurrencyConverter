@@ -2,7 +2,8 @@
     <string name="app_name">Currency Converter</string>
     <string name="currencies">Валюты</string>
     <string name="date">Дата</string>
-    <string name="error_message">На выбранную дату нет курса валют</string>
+    <string name="error_message">По заданным параметрам курса валюты нет</string>
     <string name="exchange_rate">Курс</string>
     <string name="rub">RUB</string>
+    <string name="char_code">Кодовое обозначение</string>
 </resources>

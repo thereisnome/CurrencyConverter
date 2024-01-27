@@ -29,7 +29,7 @@ class CurrencyDetailsFragment : Fragment() {
     private val binding: FragmentCurrencyDetailsBinding
         get() = _binding ?: throw RuntimeException("FragmentCurrencyDetailsBinding is null")
 
-    val viewModel: CurrencyDetailsViewModel by viewModels()
+    private val viewModel: CurrencyDetailsViewModel by viewModels()
 
     private val args by navArgs<CurrencyDetailsFragmentArgs>()
 
@@ -99,7 +99,6 @@ class CurrencyDetailsFragment : Fragment() {
             etExchangeTop.setOnFocusChangeListener { _, _ ->
                 etExchangeTop.setText("")
             }
-
             etExchangeBot.setOnFocusChangeListener { _, _ ->
                 etExchangeBot.setText("")
             }
@@ -109,7 +108,8 @@ class CurrencyDetailsFragment : Fragment() {
     private fun displayResult() {
         with(binding) {
             currencyName.text = currency.name
-            exchangeRateValue.text = formatCurrency(currency.value)
+            val value = currency.value/currency.nominal
+            exchangeRateValue.text = formatCurrency(value)
             tilExchangeTop.hint = currency.charCode
             tilExchangeBot.hint = requireContext().getString(R.string.rub)
         }
